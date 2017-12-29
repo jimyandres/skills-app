@@ -1,0 +1,14 @@
+{
+  "name": "skills-app",
+  "version": "0.0.0",
+  "description": "Simple application to discover most wanted skills in labor world.",
+  "main": "server.js",
+  "author": "jimyandres",
+  "dependencies": {
+    "body-parser": "^1.5.2",
+    "express": "^4.10.8",
+    "method-override": "^2.3.10",
+    "mongoose": "^4.10.8",
+    "morgan": "^1.9.0"
+  }
+}
