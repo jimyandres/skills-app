@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="Skills-app">
+  <head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <!-- Optimize mobile viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Skills app</title>
+
+    <!-- SCROLLS -->
+    <!-- load bootstrap -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <style>
+      html { overflow-y:scroll; }
+      body { padding-top:50px; }
+      #job-list { margin-bottom:30px; }
+      #job-form { margin-bottom:50px; }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+
+    <script src="js/controllers/main.js"></script> <!-- load up our controller -->
+    <script src="js/services/jobs.js"></script> <!-- load our job service -->
+    <script src="js/core.js"></script>
+  </head>
+  <body ng-controller="mainController">
+    <div class="container">
+
+      <!-- HEADER AND JOBS COUNT -->
+      <div class="jumbotron text-center">
+        <h1>JOBS... <span class="label label-info">{{ jobs.length }}</span></h1>
+      </div>
+
+      <!-- JOB LIST -->
+      <div id="job-list" class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+
+          <!-- LOOP OVER THE TODOS IN $scope.jobs -->
+          <label>
+            <pre> {{ jobs | json }} </pre>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- FORM TO CREATE JOBS -->
+      <div id="job-form" class="row">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+          <form>
+            <div class="form-group">
+
+              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
+              <input type="text" class="form-control input-lg text-center" placeholder="Anything ..." ng-model="formData.text">
+            </div>
+
+            <!-- createToDo() WILL CREATE NEW TODOS -->
+            <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
