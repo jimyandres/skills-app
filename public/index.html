@@ -86,7 +86,7 @@
                       <div class="col-xs-12 col-md-8">{{job.experience}}</div>
                     </li>
                     <a href="{{ job.url === 'NN' ? '#' : job.url }}">
-                      <li class="list-group-item active">
+                      <li class="list-group-item active" style="text-align: right;">
                         Link
                       </li>
                     </a>
@@ -100,18 +100,44 @@
       </div>
 
       <!-- FORM TO CREATE JOBS -->
-      <div id="job-form" class="row">
-        <div class="col-sm-12 text-center">
-          <form>
-            <div class="form-group">
+      <div id="job-form" class="container col-xs-12 col-sm-12 col-md-8 well well-sm">
+        <div class="card text-center">
 
-              <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-              <input type="text" class="form-control input-lg text-center" placeholder="Anything ..." ng-model="formData.text">
-            </div>
+          <div class="card-header">Add Job!</div>
+          <div class="card-block">
+            <form>
+              <div class="form-group">
 
-            <!-- createToDo() WILL CREATE NEW TODOS -->
-            <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
-          </form>
+                <!-- BIND THESE VALUES TO THE CORRESPONDING formData.'value' IN ANGULAR -->
+                <input class="form-control input-lg text-center" placeholder="Job name" type="text" ng-model="formData.name"/>
+                <br />
+
+                <!-- REQUIREMENTS -->
+                <div ng-repeat="ReqItem in ReqItems" class="row">
+                  <div class="col-md-8 col-xs-6 offset-md-1">
+                    <input type="text" class="form-control input-lg text-center" placeholder="Skill name" ng-model="ReqItem.nameSkill"/>
+                    <input type="number" class="form-control input-lg text-center" placeholder="Experience required" min="0" ng-model="ReqItem.experienceSkill"/>
+                  </div>
+                  <div ng-if="!$last" class="col-md-1 align-self-center">
+                    <button class="btn btn-danger" ng-click="removeReqItem($index)">- Del</button>
+                  </div>
+                  <div ng-if="$last" class="col-md-1 align-self-center">
+                    <button class="btn btn-info" ng-click="addReqItem()">+ Add</button>
+                  </div>
+                </div>
+                <br />
+                <input class="form-control input-lg text-center" placeholder="City" type="text" ng-model="formData.city"/>
+                <input class="form-control input-lg text-center" placeholder="Country" type="text" ng-model="formData.country"/>
+                <input class="form-control input-lg text-center" type="date" ng-model="formData.date"/>
+                <input class="form-control input-lg text-center" placeholder="Experience required" type="number" min="0" ng-model="formData.experience"/>
+                <input class="form-control input-lg text-center" placeholder="URL" type="text" ng-model="formData.url"/>
+                <br />
+
+                <!-- createJob() WILL CREATE NEW JOBS -->
+                <button type="submit" class="btn btn-primary btn-lg" ng-click="createJob()">Add</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
 
