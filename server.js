@@ -9,7 +9,7 @@ var database = require('./config/database');  // load the database configuration
 
 // configuration ===============================================================
 // connect to mongoDB database on modulus.io
-mongoose.connect(database.localUrl);
+mongoose.connect(database.localUrl, { useMongoClient: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
