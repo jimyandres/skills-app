@@ -30,8 +30,20 @@ module.exports = function (app) {
         res.send(err);
       getJobs(res); // return all jobs in JSON format
     })
-
   });
+
+  // delete a Job and send all Jobs after deletion
+  app.delete('/api/jobs/:job_id', function (req, res) {
+    console.log("Deleting: " + req.params.job_id);
+
+    Job.remove({
+      _id: req.params.job_id,
+    }, function (err, job) {
+      if (err)
+        res.send(err);
+      getJobs(res); // return all jobs in JSON format
+    });
+  })
 
   // application ---------------------------------------------------------------
   app.get('/api/', function (req, res) {

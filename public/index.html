@@ -43,14 +43,11 @@
           <div id="accordion" role="tablist" aria-multiselectable="true">
             <div class="card">
               <div class="card-header text-center" role="tab" id="heading{{$index}}">
-                <a ng-if="$first" data-toggle="collapse" href="#collapse{{$index}}" role="button" aria-expanded="true" aria-controls="collapse{{$index}}">
-                  <h5 class="mb-0">{{ job.name }}</h5>
-                </a>
-                <a ng-if="!$first" class="collapsed" data-toggle="collapse" href="#collapse{{$index}}" role="button" aria-expanded="false" aria-controls="collapse{{$index}}">
+                <a class="collapsed" data-toggle="collapse" href="#collapse{{$index}}" role="button" aria-expanded="false" aria-controls="collapse{{$index}}">
                   <h5 class="mb-0">{{ job.name }}</h5>
                 </a>
               </div>
-              <div id="collapse{{$index}}" class="collapse {{ $first ? 'show': '' }}" role="tabpanel" aria-labelledby="heading{{$index}}" data-parent="#accordion" >
+              <div id="collapse{{$index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$index}}" data-parent="#accordion" >
                 <div class="card-block">
                   <ul class="list-group list-group-flush align-items-stretch">
                     <li class="list-group-item">
