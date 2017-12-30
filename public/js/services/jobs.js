@@ -8,5 +8,8 @@ angular.module('jobService', [])
       create: function (jobData) {
         return $http.post('api/jobs', jobData);
       },
+      delete: function (id) {
+        return $http.delete('api/jobs/' + id);
+      }
     }
   }])

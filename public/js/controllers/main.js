@@ -3,14 +3,6 @@ angular.module('jobController', [])
   .controller('mainController', ['$scope', '$http', 'Jobs', function ($scope, $http, Jobs) {
     $scope.formData = {};
 
-    // GET
-    // when landing on the page, get all the Jobs and show them
-    // use the service to get all the Jobs
-    Jobs.get()
-      .success(function(data) {
-        $scope.jobs = data;
-      });
-
     // Requirement item
     $scope.ReqItems = [
       {
@@ -22,11 +14,18 @@ angular.module('jobController', [])
     $scope.addReqItem = function () {
       $scope.ReqItems.push({});
     }
-
     // Delete the item requirement from the form
     $scope.removeReqItem = function (index) {
       $scope.ReqItems.splice(index, 1);
     }
+
+    // GET
+    // when landing on the page, get all the Jobs and show them
+    // use the service to get all the Jobs
+    Jobs.get()
+      .success(function(data) {
+        $scope.jobs = data;
+      });
 
     // CREATE
     // when submittin the add form, send the JOB to the node API
@@ -52,5 +51,18 @@ angular.module('jobController', [])
             $scope.jobs = data; // assign our new list of todos
           });
       }
+    };
+
+    // DELETE
+    // delete a Job
+    $scope.removeJob = function (id) {
+      Jobs.delete(id)
+
+      // if success deletion, call our get function to get all the Jobs
+      .success(function (data) {
+
+        // assign our stored jobs
+        $scope.jobs = data;
+      })
     }
   }]);
