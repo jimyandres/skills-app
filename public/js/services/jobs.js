@@ -5,5 +5,8 @@ angular.module('jobService', [])
       get: function () {
         return $http.get('api/jobs');
       },
+      create: function (jobData) {
+        return $http.post('api/jobs', jobData);
+      },
     }
   }])
