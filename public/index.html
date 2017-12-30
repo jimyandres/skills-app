@@ -10,16 +10,19 @@
 
     <!-- SCROLLS -->
     <!-- load bootstrap -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" >
     <style>
       html { overflow-y:scroll; }
       body { padding-top:50px; }
-      #job-list { margin-bottom:30px; }
+      #job-list { margin: 10px; }
       #job-form { margin-bottom:50px; }
     </style>
 
     <!-- SPELLS -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+    <script src="//code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
 
     <script src="js/controllers/main.js"></script> <!-- load up our controller -->
     <script src="js/services/jobs.js"></script> <!-- load our job service -->
@@ -30,24 +33,75 @@
 
       <!-- HEADER AND JOBS COUNT -->
       <div class="jumbotron text-center">
-        <h1>JOBS... <span class="label label-info">{{ jobs.length }}</span></h1>
+        <h1>JOBS: <span class="badge badge-default">{{ jobs.length }}</span></h1>
       </div>
 
       <!-- JOB LIST -->
       <div id="job-list" class="row">
-        <div class="col-sm-4 col-sm-offset-4">
 
-          <!-- LOOP OVER THE TODOS IN $scope.jobs -->
-          <label>
-            <pre> {{ jobs | json }} </pre>
-          </label>
+        <!-- LOOP OVER THE TODOS IN $scope.jobs -->
+        <div class="col-md-12 " ng-repeat="job in jobs">
+
+          <div id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="card">
+              <a ng-if="$index === 0" data-toggle="collapse" data-parent="#accordion" href="{{'#collapse' + ($index + 1)}}" aria-expanded="true" aria-controls="{{'collapse' + ($index + 1)}}">
+                <div class="card-header text-center" role="tab" id="{{'heading' + ($index + 1)}}">
+                  <h5 class="mb-0">{{ job.name }}</h5>
+                </div>
+              </a>
+              <a ng-if="$index !== 0" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="{{'#collapse' + ($index + 1)}}" aria-expanded="false" aria-controls="{{'collapse' + ($index + 1)}}">
+                <div class="card-header text-center" role="tab" id="{{'heading' + ($index + 1)}}">
+                  <h5 class="mb-0">{{ job.name }}</h5>
+                </div>
+              </a>
+              <div id="{{'collapse' + ($index + 1)}}" class="collapse {{ !$index ? 'show': '' }}" role="tabpanel" aria-labelledby="{{'heading' + ($index + 1)}}">
+                <div class="card-block">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>Name:</strong></div>
+                      <div class="col-xs-12 col-md-8">{{job.name}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>Qualifications:</strong></div>
+                      <div class="col-xs-12 col-md-8">
+                        <div ng-repeat="qual in job.qualifications">
+                          {{qual.nameSkill+", experience required: "+qual.experienceSkill}}
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>City:</strong></div>
+                      <div class="col-xs-12 col-md-8">{{job.city}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>Country:</strong></div>
+                      <div class="col-xs-12 col-md-8">{{job.country}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>Date published:</strong></div>
+                      <div class="col-xs-12 col-md-8">{{job.date}}</div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="col-xs-6 col-md-4"><strong>Experience required:</strong></div>
+                      <div class="col-xs-12 col-md-8">{{job.experience}}</div>
+                    </li>
+                    <a href="{{ job.url === 'NN' ? '#' : job.url }}">
+                      <li class="list-group-item active">
+                        Link
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
       </div>
 
       <!-- FORM TO CREATE JOBS -->
       <div id="job-form" class="row">
-        <div class="col-sm-8 col-sm-offset-2 text-center">
+        <div class="col-sm-12 text-center">
           <form>
             <div class="form-group">
 
@@ -62,5 +116,6 @@
       </div>
 
     </div>
+
   </body>
 </html>
