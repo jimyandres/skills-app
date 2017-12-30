@@ -22,22 +22,14 @@ module.exports = function (app) {
   // create Job and send all Jobs after creation
   app.post('/api/jobs', function(req, res) {
     console.log(req.body.name);
-    // create a Job, information comes from AJAX request from Angular
 
+    // create a Job, information comes from AJAX request from Angular
     var body = req.body;
-    console.log(body);
-    // Job.create({
-    //   name: req.body.name,
-    //   qualifications: [{
-    //     nameSkill: String,
-    //     experienceSkill: {type: Number, default: 0}
-    //   }],
-    //   city: String,
-    //   country: String,
-    //   experience: { type: Number, default: 0 },
-    //   date: { type: Date, default: Date.now },
-    //   url: { type: String, default: 'NN' }
-    // })
+    Job.create(body, function (err, job) {
+      if (err)
+        res.send(err);
+      getJobs(res); // return all jobs in JSON format
+    })
 
   });
 
