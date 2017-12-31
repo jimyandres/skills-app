@@ -10,6 +10,15 @@ function getJobs(res) {
   });
 }
 
+function getSkills(res) {
+  Job.find().distinct('qualifications', function (err, skills) {
+    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    if (err)
+      res.send(err);
+    res.json(skills); // return all jobs in JSON format
+  });
+}
+
 module.exports = function (app) {
   // api -----------------------------------------------------------------------
 
@@ -43,6 +52,12 @@ module.exports = function (app) {
         res.send(err);
       getJobs(res); // return all jobs in JSON format
     });
+  })
+
+  // get all skills
+  app.get('/api/skills', function (req, res) {
+    // use mongoose to get all skills in the db
+    getSkills(res);
   })
 
   // application ---------------------------------------------------------------
