@@ -25,6 +25,7 @@
     <script src="js/controllers/main.js"></script> <!-- load up our controller -->
     <script src="js/services/jobs.js"></script> <!-- load our job service -->
     <script src="js/services/skills.js"></script> <!-- load our skill service -->
+    <script src="js/services/locations.js"></script> <!-- load our location service -->
     <script src="js/core.js"></script>
 
     <!-- CSS -->
@@ -39,76 +40,98 @@
       </div>
 
       <!-- TOP REQUIREMENTS -->
-      <div ng-repeat="skill in skillsDemand">
-        <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="{{$v = skill.perc/skills.length}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$v}}%;">
-            <span class="sr-only">{{ $v }}% Complete</span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#topRequirements" aria-expanded="false" aria-controls="collapseExample">
+              Top Requirements
+            </button>
           </div>
-          <span class="progress-type">{{ skill._id }}</span>
-          <span class="progress-completed">{{ $v.toFixed(2) }}%</span>
+          <div class="col-auto">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#jobs" aria-expanded="false" aria-controls="collapseExample">
+              Jobs
+            </button>
+          </div>
+        </div>
+      </div>
+      <br />
+
+      <div class="collapse" id="topRequirements">
+        <div class="card card-body">
+          <div ng-repeat="skill in skillsDemand">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{$v = skill.perc/skills.length}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$v}}%;">
+                <span class="sr-only">{{ $v }}% Complete</span>
+              </div>
+              <span class="progress-type">{{ skill._id }}</span>
+              <span class="progress-completed">{{ $v.toFixed(2) }}%</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- JOB LIST -->
-      <div id="job-list" class="row">
+      <div class="collapse" id="jobs">
+        <div id="job-list" class="row">
 
-        <!-- LOOP OVER THE TODOS IN $scope.jobs -->
-        <div class="col-md-12 " ng-repeat="job in jobs">
+          <!-- LOOP OVER THE TODOS IN $scope.jobs -->
+          <div class="col-md-12 " ng-repeat="job in jobs">
 
-          <div id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="card">
-              <div class="card-header text-center" role="tab" id="heading{{$index}}">
-                <a class="collapsed" data-toggle="collapse" href="#collapse{{$index}}" role="button" aria-expanded="false" aria-controls="collapse{{$index}}">
-                  <h5 class="mb-0">{{ job.name }}</h5>
-                </a>
-              </div>
-              <div id="collapse{{$index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$index}}" data-parent="#accordion" >
-                <div class="card-block">
-                  <ul class="list-group list-group-flush align-items-stretch">
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>Name:</strong></div>
-                      <div class="col-xs-12 col-md-8">{{job.name}}</div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>Qualifications:</strong></div>
-                      <div class="col-xs-12 col-md-8">
-                        <div ng-repeat="qual in job.qualifications">
-                          {{qual.nameSkill+", experience required: "+qual.experienceSkill}}
-                        </div>
-                      </div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>City:</strong></div>
-                      <div class="col-xs-12 col-md-8">{{job.city}}</div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>Country:</strong></div>
-                      <div class="col-xs-12 col-md-8">{{job.country}}</div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>Date published:</strong></div>
-                      <div class="col-xs-12 col-md-8">{{job.date}}</div>
-                    </li>
-                    <li class="list-group-item">
-                      <div class="col-xs-6 col-md-4"><strong>Experience required:</strong></div>
-                      <div class="col-xs-12 col-md-8">{{job.experience}}</div>
-                    </li>
-                    <a href="{{ job.url === 'NN' ? '#' : job.url }}">
-                      <li class="list-group-item active">
-                        Link
+            <div id="accordion" role="tablist" aria-multiselectable="true">
+              <div class="card">
+                <div class="card-header text-center" role="tab" id="heading{{$index}}">
+                  <a class="collapsed" data-toggle="collapse" href="#collapse{{$index}}" role="button" aria-expanded="false" aria-controls="collapse{{$index}}">
+                    <h5 class="mb-0">{{ job.name }}</h5>
+                  </a>
+                </div>
+                <div id="collapse{{$index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$index}}" data-parent="#accordion" >
+                  <div class="card-block">
+                    <ul class="list-group list-group-flush align-items-stretch">
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>Name:</strong></div>
+                        <div class="col-xs-12 col-md-8">{{job.name}}</div>
                       </li>
-                    </a>
-                  </ul>
-                  <br />
-                  <div class="text-center">
-                    <button class="btn btn-danger w-25 p-2" ng-click="removeJob(job._id)">Delete</button>
-                  </div>
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>Qualifications:</strong></div>
+                        <div class="col-xs-12 col-md-8">
+                          <div ng-repeat="qual in job.qualifications">
+                            {{qual.nameSkill+", experience required: "+qual.experienceSkill}}
+                          </div>
+                        </div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>City:</strong></div>
+                        <div class="col-xs-12 col-md-8">{{job.city}}</div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>Country:</strong></div>
+                        <div class="col-xs-12 col-md-8">{{job.country}}</div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>Date published:</strong></div>
+                        <div class="col-xs-12 col-md-8">{{job.date}}</div>
+                      </li>
+                      <li class="list-group-item">
+                        <div class="col-xs-6 col-md-4"><strong>Experience required:</strong></div>
+                        <div class="col-xs-12 col-md-8">{{job.experience}}</div>
+                      </li>
+                      <a href="{{ job.url === 'NN' ? '#' : job.url }}">
+                        <li class="list-group-item active">
+                          Link
+                        </li>
+                      </a>
+                    </ul>
+                    <br />
+                    <div class="text-center">
+                      <button class="btn btn-danger w-25 p-2" ng-click="removeJob(job._id)">Delete</button>
+                    </div>
 
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
 
@@ -130,20 +153,26 @@
                   <div class="col-md-7 col-xs-6 offset-md-1">
                     <input type="text" class="form-control input-lg text-center" placeholder="Skill name" ng-model="ReqItem.nameSkill" list="skills"/>
                     <datalist id="skills">
-                      <option ng-repeat="skill in skills">{{skill.nameSkill}}</option>
+                      <option ng-repeat="skill in skills">{{skill}}</option>
                     </datalist>
                     <input type="number" class="form-control input-lg text-center" placeholder="Experience required" min="0" ng-model="ReqItem.experienceSkill"/>
                   </div>
-                  <div ng-if="!$last" class="col-md-3 align-self-center">
+                  <div class="col-md-3 align-self-center">
+                    <div ng-if="$first">
+                      <button class="btn btn-info w-75" ng-click="addReqItem()">+</button>
+                    </div>
                     <button class="btn btn-danger w-75" ng-click="removeReqItem($index)">-</button>
-                  </div>
-                  <div ng-if="$last" class="col-md-3 align-self-center">
-                    <button class="btn btn-info w-75" ng-click="addReqItem()">+</button>
                   </div>
                 </div>
                 <br />
-                <input class="form-control input-lg text-center" placeholder="City" type="text" ng-model="formData.city"/>
-                <input class="form-control input-lg text-center" placeholder="Country" type="text" ng-model="formData.country"/>
+                <input class="form-control input-lg text-center" placeholder="City" type="text" ng-model="formData.city" list="cities"/>
+                <datalist id="cities">
+                  <option ng-repeat="city in cities">{{city}}</option>
+                </datalist>
+                <input class="form-control input-lg text-center" placeholder="Country" type="text" ng-model="formData.country" list="countries"/>
+                <datalist id="countries">
+                  <option ng-repeat="country in countries">{{country}}</option>
+                </datalist>
                 <input class="form-control input-lg text-center" type="date" ng-model="formData.date"/>
                 <input class="form-control input-lg text-center" placeholder="Experience required" type="number" min="0" ng-model="formData.experience"/>
                 <input class="form-control input-lg text-center" placeholder="URL" type="text" ng-model="formData.url"/>

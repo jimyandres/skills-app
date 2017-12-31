@@ -11,11 +11,29 @@ function getJobs(res) {
 }
 
 function getSkills(res) {
-  Job.find().distinct('qualifications', function (err, skills) {
+  Job.find().distinct('qualifications.nameSkill', function (err, skills) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err)
       res.send(err);
     res.json(skills); // return all skills in JSON format
+  });
+}
+
+function getCities(res) {
+  Job.find().distinct('city', function (err, cities) {
+    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    if (err)
+      res.send(err);
+    res.json(cities); // return all cities in JSON format
+  });
+}
+
+function getCountries(res) {
+  Job.find().distinct('country', function (err, countries) {
+    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    if (err)
+      res.send(err);
+    res.json(countries); // return all countries in JSON format
   });
 }
 
@@ -90,6 +108,18 @@ module.exports = function (app) {
   app.get('/api/skills/demand', function (req, res) {
     // use mongoose to get the skills count
     getSkillsCount(res);
+  })
+
+  // get cities count
+  app.get('/api/cities', function (req, res) {
+    // use mongoose to get the cities count
+    getCities(res);
+  })
+
+  // get countries count
+  app.get('/api/countries', function (req, res) {
+    // use mongoose to get the countries count
+    getCountries(res);
   })
 
   // application ---------------------------------------------------------------

@@ -1,5 +1,6 @@
 angular.module('Skills-app', [
   'jobController',
   'jobService',
-  'skillService'
+  'skillService',
+  'locationService'
 ]);

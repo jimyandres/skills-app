@@ -1,22 +1,19 @@
 angular.module('jobController', [])
   // inject the Job service factory into the controller
-  .controller('mainController', ['$scope', '$http', 'Jobs', 'Skills', function ($scope, $http, Jobs, Skills) {
+  .controller('mainController', ['$scope', '$http', 'Jobs', 'Skills', 'Locations', function ($scope, $http, Jobs, Skills, Locations) {
     $scope.formData = {};
 
     // 'Requirement' item
-    $scope.ReqItems = [
-      {
-        nameSkill: null,
-        experienceSkill: null,
-      }
-    ];
+    $scope.ReqItems = [{}];
     // Add new requiremet item to form
     $scope.addReqItem = function () {
-      $scope.ReqItems.push({});
+      $scope.ReqItems.splice(0,0,{});
     }
     // Delete the item requirement from the form
     $scope.removeReqItem = function (index) {
-      $scope.ReqItems.splice(index, 1);
+      console.log($scope.ReqItems.length);
+      if ($scope.ReqItems.length > 1)
+        $scope.ReqItems.splice(index, 1);
     }
 
     // GET ---------------------------------------------------------------------
@@ -45,6 +42,21 @@ angular.module('jobController', [])
     }
     getSkills();
 
+    // LOCATIONS
+    // when landing on the page, get all the cities and countries
+    function getLocations() {
+      Locations.getCities()
+        .success(function (data) {
+          $scope.cities = data;
+        })
+
+      // when landing on the page, get the count Skills (demand)
+      Locations.getCountries()
+        .success(function (data) {
+          $scope.countries = data;
+        })
+    }
+    getLocations();
 
     // CREATE ------------------------------------------------------------------
     // when submittin the add form, send the JOB to the node API
@@ -67,6 +79,7 @@ angular.module('jobController', [])
 
             // clear the form so our user is ready to enter another
             $scope.formData = {};
+            $scope.ReqItems = [{}];
             $scope.jobs = data; // assign our new list of todos
           });
         getSkills();
