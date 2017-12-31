@@ -1,1 +1,5 @@
-angular.module('Skills-app', ['jobService', 'jobController']);
+angular.module('Skills-app', [
+  'jobController',
+  'jobService',
+  'skillService'
+]);

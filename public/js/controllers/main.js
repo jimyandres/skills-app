@@ -19,7 +19,9 @@ angular.module('jobController', [])
       $scope.ReqItems.splice(index, 1);
     }
 
-    // GET
+    // GET ---------------------------------------------------------------------
+
+    // JOBS
     // when landing on the page, get all the Jobs and show them
     // use the service to get all the Jobs
     Jobs.get()
@@ -27,7 +29,14 @@ angular.module('jobController', [])
         $scope.jobs = data;
       });
 
-    // CREATE
+    // SKILLS
+    // when landing on the page, get all the Skills
+    Skills.get()
+      .success(function (data) {
+        $scope.skills = data;
+      })
+
+    // CREATE ------------------------------------------------------------------
     // when submittin the add form, send the JOB to the node API
     $scope.createJob = function () {
       // validate the formData to make sure that something is there
@@ -53,7 +62,7 @@ angular.module('jobController', [])
       }
     };
 
-    // DELETE
+    // DELETE ------------------------------------------------------------------
     // delete a Job
     $scope.removeJob = function (id) {
       Jobs.delete(id)
@@ -64,5 +73,5 @@ angular.module('jobController', [])
         // assign our stored jobs
         $scope.jobs = data;
       })
-    }
+    };
   }]);
