@@ -83,6 +83,7 @@ angular.module('jobController', [])
             $scope.jobs = data; // assign our new list of todos
           });
         getSkills();
+        getLocations();
       }
     };
 
@@ -98,5 +99,6 @@ angular.module('jobController', [])
         $scope.jobs = data;
       })
       getSkills();
+      getLocations();
     };
   }]);
