@@ -25,8 +25,17 @@ function getSkillsCount(res) {
     {
       $group: {
         _id: "$qualifications.nameSkill",
-        count: { $sum: 1 }
+        count: { $sum: 1 },
       },
+    },
+    {
+      $project: {
+        "_id" : 1,
+        "count" : 1,
+        "perc" : {
+          $multiply : [ "$count", 100 ]
+        }
+      }
     },
   ], function (err, skillsCount) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
