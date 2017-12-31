@@ -15,7 +15,24 @@ function getSkills(res) {
     // if there is an error retrieving, send the error. nothing after res.send(err) will execute
     if (err)
       res.send(err);
-    res.json(skills); // return all jobs in JSON format
+    res.json(skills); // return all skills in JSON format
+  });
+}
+
+function getSkillsCount(res) {
+  Job.aggregate([
+    { $unwind: "$qualifications" },
+    {
+      $group: {
+        _id: "$qualifications.nameSkill",
+        count: { $sum: 1 }
+      },
+    },
+  ], function (err, skillsCount) {
+    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+    if (err)
+      res.send(err);
+    res.json(skillsCount); // return all skillsCount in JSON format
   });
 }
 
@@ -58,6 +75,12 @@ module.exports = function (app) {
   app.get('/api/skills', function (req, res) {
     // use mongoose to get all skills in the db
     getSkills(res);
+  })
+
+  // get skills count
+  app.get('/api/skills/demand', function (req, res) {
+    // use mongoose to get the skills count
+    getSkillsCount(res);
   })
 
   // application ---------------------------------------------------------------
