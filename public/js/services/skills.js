@@ -4,6 +4,9 @@ angular.module('skillService', [])
     return {
       get: function () {
         return $http.get('api/skills');
+      },
+      getDemand: function () {
+        return $http.get('api/skills/demand');
       }
     }
   }])

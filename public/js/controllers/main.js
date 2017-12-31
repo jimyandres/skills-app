@@ -3,7 +3,7 @@ angular.module('jobController', [])
   .controller('mainController', ['$scope', '$http', 'Jobs', 'Skills', function ($scope, $http, Jobs, Skills) {
     $scope.formData = {};
 
-    // Requirement item
+    // 'Requirement' item
     $scope.ReqItems = [
       {
         nameSkill: null,
@@ -31,10 +31,20 @@ angular.module('jobController', [])
 
     // SKILLS
     // when landing on the page, get all the Skills
-    Skills.get()
-      .success(function (data) {
-        $scope.skills = data;
-      })
+    function getSkills() {
+      Skills.get()
+        .success(function (data) {
+          $scope.skills = data;
+        })
+
+      // when landing on the page, get the count Skills (demand)
+      Skills.getDemand()
+        .success(function (data) {
+          $scope.skillsDemand = data;
+        })
+    }
+    getSkills();
+
 
     // CREATE ------------------------------------------------------------------
     // when submittin the add form, send the JOB to the node API
@@ -59,6 +69,7 @@ angular.module('jobController', [])
             $scope.formData = {};
             $scope.jobs = data; // assign our new list of todos
           });
+        getSkills();
       }
     };
 
@@ -73,5 +84,6 @@ angular.module('jobController', [])
         // assign our stored jobs
         $scope.jobs = data;
       })
+      getSkills();
     };
   }]);

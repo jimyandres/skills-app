@@ -10,8 +10,8 @@
 
     <!-- SCROLLS -->
     <!-- load bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" >
-    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" > -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
     <style>
       html { overflow-y:scroll; }
       body { padding-top:50px; }
@@ -24,7 +24,11 @@
 
     <script src="js/controllers/main.js"></script> <!-- load up our controller -->
     <script src="js/services/jobs.js"></script> <!-- load our job service -->
+    <script src="js/services/skills.js"></script> <!-- load our skill service -->
     <script src="js/core.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body ng-controller="mainController">
     <div class="container">
@@ -32,6 +36,17 @@
       <!-- HEADER AND JOBS COUNT -->
       <div class="jumbotron text-center">
         <h1>JOBS: <span class="badge badge-default">{{ jobs.length }}</span></h1>
+      </div>
+
+      <!-- TOP REQUIREMENTS -->
+      <div ng-repeat="skill in skillsDemand">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="{{$v = skill.perc/skills.length}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$v}}%;">
+            <span class="sr-only">{{ $v }}% Complete</span>
+          </div>
+          <span class="progress-type">{{ skill._id }}</span>
+          <span class="progress-completed">{{ $v.toFixed(2) }}%</span>
+        </div>
       </div>
 
       <!-- JOB LIST -->
@@ -113,7 +128,10 @@
                 <!-- REQUIREMENTS -->
                 <div ng-repeat="ReqItem in ReqItems" class="row">
                   <div class="col-md-7 col-xs-6 offset-md-1">
-                    <input type="text" class="form-control input-lg text-center" placeholder="Skill name" ng-model="ReqItem.nameSkill"/>
+                    <input type="text" class="form-control input-lg text-center" placeholder="Skill name" ng-model="ReqItem.nameSkill" list="skills"/>
+                    <datalist id="skills">
+                      <option ng-repeat="skill in skills">{{skill.nameSkill}}</option>
+                    </datalist>
                     <input type="number" class="form-control input-lg text-center" placeholder="Experience required" min="0" ng-model="ReqItem.experienceSkill"/>
                   </div>
                   <div ng-if="!$last" class="col-md-3 align-self-center">
