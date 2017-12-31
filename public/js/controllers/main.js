@@ -1,6 +1,6 @@
 angular.module('jobController', [])
   // inject the Job service factory into the controller
-  .controller('mainController', ['$scope', '$http', 'Jobs', function ($scope, $http, Jobs) {
+  .controller('mainController', ['$scope', '$http', 'Jobs', 'Skills', function ($scope, $http, Jobs, Skills) {
     $scope.formData = {};
 
     // Requirement item
